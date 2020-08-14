@@ -9,8 +9,11 @@ package="com.example.chulangnghiem">
     android:roundIcon="@drawable/ic_launcher_foreground"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
-    <activity android:name="MainActivity"></activity>
-    <activity android:name="SplashScreenActivity"
+    <activity android:name="MainActivity"
+        android:label="Chú Lăng Nghiêm 🙏"
+        android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize">
+    </activity>
+    <activity android:name="SplashScreenActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />

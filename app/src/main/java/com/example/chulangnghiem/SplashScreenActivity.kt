@@ -18,6 +18,6 @@ class SplashScreenActivity : AppCompatActivity() {
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
             finish()
-        },2000) //thời gian màn hình chờ
+        },3000) //thời gian màn hình chờ
     }
 }

@@ -1,20 +1,22 @@
 package com.example.chulangnghiem
 
-import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : Activity() {
+
+class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //Full Screen hãy thay đổi  AppCompatActivity thành Activity
+//        Full Screen hãy thay đổi  AppCompatActivity thành Activity
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -22,7 +24,15 @@ class MainActivity : Activity() {
         )
 
         setContentView(R.layout.activity_main)
-    //Load WebView
+     //Load WebView
+        xuLyWeb()
+        //   xyLyWebN()
+
+    }
+
+
+
+    private fun xuLyWeb() {
         var url: String = "file:///android_asset/CHULANGNGHIEM.htm"
 
         val myWebView: WebView = findViewById(R.id.myWeb)
@@ -43,7 +53,8 @@ class MainActivity : Activity() {
             }
         }
     }
-//Tao phuong thuc AlerDialog va nhan phim back quay ve
+
+    //Tao phuong thuc AlerDialog va nhan phim back quay ve
     override fun onBackPressed() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setIcon(R.drawable.alert)
@@ -58,5 +69,8 @@ class MainActivity : Activity() {
         val alertDialog: AlertDialog = builder.create()
         alertDialog.show()
     }
+
+
 }
+
 

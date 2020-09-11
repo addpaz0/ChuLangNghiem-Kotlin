@@ -1,57 +1,78 @@
 package com.example.chulangnghiem
 
+import android.content.ActivityNotFoundException
 import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.*
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.view.View
+import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.chulangnghiem.databinding.ActivityMainBinding
+import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() {
+open class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        Full Screen hãy thay đổi  AppCompatActivity thành Activity
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
+//        val binding = ActivityMainBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
 
         setContentView(R.layout.activity_main)
-     //Load WebView
         xuLyWeb()
-        //   xyLyWebN()
+
+        topAppBar.setNavigationOnClickListener {
+            // Handle navigation icon press
+        }
+
+           topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.mn_menu -> {
+                    var url: String = "file:///android_asset/CHULANGNGHIEMNIGHT.htm"
+                    myWeb.loadUrl(url)
+                    true
+                }
+                R.id.mn_toi ->{
+                    var url: String = "file:///android_asset/CHULANGNGHIEM.htm"
+                    myWeb.loadUrl(url)
+                    true
+                }
+                R.id.menu_gioiThieu ->{
+                    startActivity(Intent(this,GioiThieu::class.java))
+                    true
+                }
+
+                R.id.menu_khac -> {
+                    try {
+                        startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("https://play.google.com/store/search?q=pub%3APhat93&c=apps")
+                            )
+                        )
+                    } catch (e: ActivityNotFoundException) {
+                        startActivity(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("https://play.google.com/store/search?q=pub%3APhat93&c=apps")
+                            )
+                        )
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
 
     }
 
-
-
     private fun xuLyWeb() {
         var url: String = "file:///android_asset/CHULANGNGHIEM.htm"
-
-        val myWebView: WebView = findViewById(R.id.myWeb)
-
-        myWebView.settings.javaScriptEnabled = true
-        myWebView.settings.setSupportZoom(true)
-        myWebView.settings.builtInZoomControls = true
-        myWebView.settings.displayZoomControls = true
-        myWebView.loadUrl(url)
-
-        myWebView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(
-                view: WebView?,
-                request: WebResourceRequest?
-            ): Boolean {
-                view?.loadUrl(url)
-                return true
-            }
-        }
+        myWeb.loadUrl(url)
     }
 
     //Tao phuong thuc AlerDialog va nhan phim back quay ve
@@ -61,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         builder.setTitle("Mô Phật")
         builder.setMessage("Thí chủ muốn xuống núi?")
         builder.setPositiveButton("Mệt Nghỉ", DialogInterface.OnClickListener { dialog, which ->
-          finish()
+            finish()
         })
         builder.setNegativeButton("Tới bến", DialogInterface.OnClickListener { dialog, which ->
             dialog.cancel()
@@ -71,6 +92,10 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
 }
+
+
+
 
 

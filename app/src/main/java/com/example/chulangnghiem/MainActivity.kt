@@ -32,12 +32,12 @@ open class MainActivity : AppCompatActivity() {
            topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.mn_menu -> {
-                    var url: String = "file:///android_asset/CHULANGNGHIEMNIGHT.htm"
-                    myWeb.loadUrl(url)
+                    val urlnight: String = "file:///android_asset/CHULANGNGHIEMNIGHT.htm"
+                    myWeb.loadUrl(urlnight)
                     true
                 }
                 R.id.mn_toi ->{
-                    var url: String = "file:///android_asset/CHULANGNGHIEM.htm"
+                    val url: String = "file:///android_asset/CHULANGNGHIEM.htm"
                     myWeb.loadUrl(url)
                     true
                 }
@@ -71,7 +71,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun xuLyWeb() {
-        var url: String = "file:///android_asset/CHULANGNGHIEM.htm"
+        val url: String = "file:///android_asset/CHULANGNGHIEM.htm"
         myWeb.loadUrl(url)
     }
 

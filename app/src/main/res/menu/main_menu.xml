@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+<item
+    android:id="@+id/mn_toi"
+    android:icon="@drawable/ic_sun"
+    app:showAsAction="always"
+    android:title="Sáng" />
+<item
+    android:id="@+id/mn_menu"
+    android:icon="@drawable/ic_night"
+    app:showAsAction="always"
+    android:title="Tối" />
+
+<item
+    android:id="@+id/menu_gioiThieu"
+    android:title="Giảng giải" />
+
+<item
+    android:id="@+id/menu_khac"
+    android:title="Ứng dụng khác"/>
+</menu>

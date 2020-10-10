@@ -14,9 +14,6 @@
             android:configChanges="orientation|screenSize">
         </activity>
 
-        <activity android:name=".NightActivity"
-            android:configChanges="orientation|screenSize"/>
-
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />

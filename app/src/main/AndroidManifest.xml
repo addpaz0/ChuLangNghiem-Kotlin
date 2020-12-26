@@ -11,7 +11,10 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".GioiThieu"
-            android:configChanges="orientation|screenSize">
+            android:theme="@style/AppThemeGioiThieu"
+            android:label="Chú Lăng Nghiêm"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".MainActivity">
         </activity>
 
         <activity

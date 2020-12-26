@@ -3,22 +3,23 @@
 xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-<item
-    android:id="@+id/mn_toi"
-    android:icon="@drawable/ic_sun"
-    app:showAsAction="always"
-    android:title="Sáng" />
-<item
-    android:id="@+id/mn_menu"
-    android:icon="@drawable/ic_night"
-    app:showAsAction="always"
-    android:title="Tối" />
 
-<item
-    android:id="@+id/menu_gioiThieu"
-    android:title="Giảng giải" />
+    <item
+        android:id="@+id/menuBook"
+        android:icon="@drawable/ic_baseline_menu_book_24"
+        android:title="eBook"
+        app:showAsAction="ifRoom" />
 
-<item
-    android:id="@+id/menu_khac"
-    android:title="Ứng dụng khác"/>
+    <item
+        android:id="@+id/menuMp3"
+        android:icon="@drawable/ic_baseline_music_note_24"
+        android:title="MP3"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menuST"
+        android:icon="@drawable/ic_night"
+        android:title="Nền"
+        app:showAsAction="ifRoom" />
+
 </menu>

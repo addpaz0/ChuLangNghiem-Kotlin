@@ -2,11 +2,14 @@ package com.example.chulangnghiem
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.webkit.WebView
 import android.widget.Switch
@@ -22,6 +25,47 @@ class MainActivity : Activity() {
     private lateinit var mp: MediaPlayer
     var check_st: Boolean = false
 
+
+    private val TAG = "AudioFocus"
+    private val mOnAudioFocusChangeListener =
+        AudioManager.OnAudioFocusChangeListener { focusChange ->
+            when (focusChange) {
+                AudioManager.AUDIOFOCUS_GAIN -> {
+                    Log.i(TAG, "AUDIOFOCUS_GAIN")
+                    // Set volume level to desired levels
+                    mp.start()
+                }
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT -> {
+                    Log.i(TAG, "AUDIOFOCUS_GAIN_TRANSIENT")
+                    // You have audio focus for a short time
+                    mp.start()
+                }
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK -> {
+                    Log.i(TAG, "AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK")
+                    // Play over existing audio
+                    mp.start()
+                }
+                AudioManager.AUDIOFOCUS_LOSS -> {
+                    Log.e(TAG, "AUDIOFOCUS_LOSS asdasd")
+
+
+                    mp.pause()
+                }
+                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
+                    Log.e(TAG, "AUDIOFOCUS_LOSS_TRANSIENT")
+                    // Temporary loss of audio focus - expect to get it back - you can keep your resources around
+                    mp.pause()
+                }
+                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> Log.e(
+                    TAG,
+                    "AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK"
+                )
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE -> {
+                    Log.e(TAG, "AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE")
+                }
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,6 +80,7 @@ class MainActivity : Activity() {
 //            WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //            WindowManager.LayoutParams.FLAG_FULLSCREEN
 //        )
+
         setContentView(R.layout.activity_main)
         xulyWebView()
 
@@ -54,9 +99,12 @@ class MainActivity : Activity() {
                         mp.pause()
                         menuItem.setIcon(R.drawable.ic_baseline_music_note_24)
                     } else {
-                        // Start
-                        mp.start()
-                        menuItem.setIcon(R.drawable.ic_baseline_music_off_24)
+                        val gotFocus = requestAudioFocusForMyApp(this@MainActivity)
+                        if (gotFocus) {
+                            // Start
+                            mp.start()
+                            menuItem.setIcon(R.drawable.ic_baseline_music_off_24)
+                        }
                     }
                     true
                 }
@@ -113,9 +161,30 @@ class MainActivity : Activity() {
         val alertDialog: AlertDialog = builder.create()
         alertDialog.show()
     }
+    private fun requestAudioFocusForMyApp(context: Context): Boolean {
+        val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+
+        // Request audio focus for playback
+        val result = am.requestAudioFocus(
+            mOnAudioFocusChangeListener,  // Use the music stream.
+            AudioManager.STREAM_MUSIC,  // Request permanent focus.
+            AudioManager.AUDIOFOCUS_GAIN
+        )
+        return if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            Log.d(TAG, "Audio focus received")
+            true
+        } else {
+            Log.d(TAG, "Audio focus NOT received")
+            false
+        }
+    }
+
+    fun releaseAudioFocusForMyApp(context: Context) {
+        val am = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        am.abandonAudioFocus(mOnAudioFocusChangeListener)
+    }
 
 }
-
 
 
 

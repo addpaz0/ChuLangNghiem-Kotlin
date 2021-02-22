@@ -1,17 +1,21 @@
 package com.example.chulangnghiem
 
-import android.app.Activity
+import android.app.*
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.webkit.WebView
+import android.widget.RemoteViews
 import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -21,6 +25,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : Activity() {
+    //test notifi
+    lateinit var notificationManager : NotificationManager
+    lateinit var notificationChannel : NotificationChannel
+    lateinit var builder : Notification.Builder
+    private val channelId = "chulangnghiem"
+    private val description = "Chú Lăng Nghiêm"
 
     private lateinit var mp: MediaPlayer
     var check_st: Boolean = false
@@ -69,6 +79,8 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //Tạo thông báo
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         // Media Player
         mp = MediaPlayer.create(this, R.raw.chulangnghiem)
         mp.isLooping = true
@@ -91,8 +103,7 @@ class MainActivity : Activity() {
         topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
 
-                R.id.menuMp3 ->
-                {
+                R.id.menuMp3 -> {
                     if (mp.isPlaying) {
                         menuItem.isChecked
                         // Stop
@@ -104,7 +115,39 @@ class MainActivity : Activity() {
                             // Start
                             mp.start()
                             menuItem.setIcon(R.drawable.ic_baseline_music_off_24)
+                            //Tạo thông báo
+                            val intent = Intent(this,MainActivity::class.java)
+                            val pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
+
+                            val contentView = RemoteViews(packageName,R.layout.notification_layout)
+                            contentView.setTextViewText(R.id.tv_title,"Chú Lăng Nghiêm")
+                            contentView.setTextViewText(R.id.tv_content,"Nhấn để quay lại ứng dụng")
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                notificationChannel = NotificationChannel(channelId,description,NotificationManager.IMPORTANCE_HIGH)
+                                notificationChannel.enableLights(true)
+                                notificationChannel.lightColor = Color.GREEN
+                                notificationChannel.enableVibration(false)
+                                notificationManager.createNotificationChannel(notificationChannel)
+
+                                builder = Notification.Builder(this,channelId)
+                                    .setContent(contentView)
+                                    .setSmallIcon(R.drawable.musicnotifi)
+                                    .setLargeIcon(BitmapFactory.decodeResource(this.resources,R.drawable.ic_baseline_music_note_24))
+                                    .setContentIntent(pendingIntent)
+
+                            }else{
+
+                                builder = Notification.Builder(this)
+                                    .setContent(contentView)
+                                    .setSmallIcon(R.drawable.musicnotifi)
+                                    .setLargeIcon(BitmapFactory.decodeResource(this.resources,R.drawable.ic_baseline_music_note_24))
+                                    .setContentIntent(pendingIntent)
+
+                            }
+                            notificationManager.notify(1234,builder.build())
                         }
+                        // Start
                     }
                     true
                 }

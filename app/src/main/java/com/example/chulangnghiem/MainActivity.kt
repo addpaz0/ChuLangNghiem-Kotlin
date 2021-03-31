@@ -173,7 +173,7 @@ class MainActivity : Activity() {
                 }
 
                 R.id.menuBook -> {
-                    startActivity(Intent(this, GioiThieu::class.java))
+                    startActivity(Intent(this, Ebook::class.java))
                     true
                 }
                 else -> false

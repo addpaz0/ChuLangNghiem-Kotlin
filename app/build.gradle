@@ -10,8 +10,8 @@ android {
         applicationId "chulangnghiem.blogspot.com"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 11
-        versionName "2.5"
+        versionCode 12
+        versionName "2.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

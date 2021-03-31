@@ -9,19 +9,28 @@
         android:roundIcon="@drawable/ic_launcher_foreground"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".GioiThieu"
-            android:theme="@style/AppThemeGioiThieu"
-            android:label="Chú Lăng Nghiêm"
+        <activity android:name=".Ebook"
             android:configChanges="orientation|screenSize"
-            android:parentActivityName=".MainActivity">
+            android:label="Chú Lăng Nghiêm"
+            android:parentActivityName=".Ebook"
+            android:theme="@style/AppThemeGioiThieu">
         </activity>
-
+        <activity android:name=".BangChiaCau"
+        android:configChanges="orientation|screenSize"
+        android:label="Chú Lăng Nghiêm"
+        android:parentActivityName=".Ebook"
+            android:theme="@style/AppThemeGioiThieu">
+        </activity>
+        <activity
+            android:name=".GioiThieu"
+            android:configChanges="orientation|screenSize"
+            android:label="Chú Lăng Nghiêm"
+            android:parentActivityName=".Ebook"
+            android:theme="@style/AppThemeGioiThieu" />
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTask" />
-
         <activity
             android:name=".SplashScreenActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"

@@ -40,41 +40,56 @@ class MainActivity : Activity() {
     private val mOnAudioFocusChangeListener =
         AudioManager.OnAudioFocusChangeListener { focusChange ->
             when (focusChange) {
-                AudioManager.AUDIOFOCUS_GAIN -> {
-                    Log.i(TAG, "AUDIOFOCUS_GAIN")
-                    // Set volume level to desired levels
-                    mp.start()
-                }
+//                AudioManager.AUDIOFOCUS_GAIN -> {
+//                    Log.i(TAG, "AUDIOFOCUS_GAIN")
+//                    // Set volume level to desired levels
+//
+//                        mp.pause()
+//
+//
+//                }
                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT -> {
                     Log.i(TAG, "AUDIOFOCUS_GAIN_TRANSIENT")
                     // You have audio focus for a short time
-                    mp.start()
+                    // mp.start()
+                    mp.pause()
                 }
                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK -> {
                     Log.i(TAG, "AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK")
                     // Play over existing audio
-                    mp.start()
+                    mp.pause()
+
                 }
                 AudioManager.AUDIOFOCUS_LOSS -> {
-                    Log.e(TAG, "AUDIOFOCUS_LOSS asdasd")
-
+                    Log.e(TAG, "AUDIOFOCUS_LOSS")
 
                     mp.pause()
+
                 }
                 AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
                     Log.e(TAG, "AUDIOFOCUS_LOSS_TRANSIENT")
                     // Temporary loss of audio focus - expect to get it back - you can keep your resources around
+                    //cuoc goi den
                     mp.pause()
+
                 }
-                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> Log.e(
-                    TAG,
-                    "AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK"
-                )
+                AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {
+                    Log.e(
+                        TAG, "AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK"
+                    )
+
+                    mp.pause()
+
+                }
                 AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE -> {
                     Log.e(TAG, "AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE")
+
+                    mp.pause()
+
                 }
             }
         }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
